@@ -5,7 +5,7 @@ The Expense Reimbursement System (ERS) will manage the process of reimbursing em
 
 **User**  
 The User model keeps track of users information.
-```json
+```javascript
 {
   userId: number, // primary key
 	username: string, // not null, unique
@@ -28,7 +28,7 @@ The Role model is used to track what permissions a user has
 
 **Reimbursement**  
 The Reimbursement model is used to represent a single reimbursement that an employee would submit
-```json
+```javascript
 {
   reimbursementId: number, // primary key
 	author: number,  // foreign key -> User, not null
@@ -45,7 +45,7 @@ The Reimbursement model is used to represent a single reimbursement that an empl
 
 **ReimbursementStatus**  
 The ReimbursementStatus model is used to track the status of reimbursements. Status possibilities are `Pending`, `Approved`, or `Denied`.
-```json
+```javascript
 {
   statusId: number, // primary key
   status: string // not null, unique
@@ -54,7 +54,7 @@ The ReimbursementStatus model is used to track the status of reimbursements. Sta
 
 **ReimbursementType**  
 The ReimbursementType model is used to track what kind of reimbursement is being submitted. Type possibilities are `Lodging`, `Travel`, `Food`, or `Other`.
-```json
+```javascript
 {
   typeId: number, // primary key
   type: string, // not null, unique
@@ -67,7 +67,7 @@ The ReimbursementType model is used to track what kind of reimbursement is being
   If a user does not have permission to access a particular endpoint it should return the following:
   * **Status Code:** 401 UNAUTHORIZED <br />
     **Content:** 
-    ```json
+    ```javascript
     {
       "message": "The incoming token has expired"
     }
@@ -85,7 +85,7 @@ The ReimbursementType model is used to track what kind of reimbursement is being
   `POST`
 
 * **Request:**
-  ```json
+  ```javascript
   {
     username: string,
     password: string
@@ -93,13 +93,13 @@ The ReimbursementType model is used to track what kind of reimbursement is being
   ```
 
 * **Response:**
-    ```json
+    ```javascript
       User
     ```
 
 * **Error Response**
   * **Status Code:** 400 BAD REQUEST
-  ```json
+  ```javascript
   {
     message: "Invalid Credentials"
   }
@@ -114,7 +114,7 @@ The ReimbursementType model is used to track what kind of reimbursement is being
 * **Allowed Roles** `finance-manager`
 
 * **Response:**
-    ```json
+    ```javascript
     [
       User
     ]
@@ -130,7 +130,7 @@ The ReimbursementType model is used to track what kind of reimbursement is being
 * **Allowed Roles** `finance-manager` or if the id provided matches the id of the current user
 
 * **Response:**
-    ```json
+    ```javascript
     [
       User
     ]
@@ -147,12 +147,12 @@ The ReimbursementType model is used to track what kind of reimbursement is being
 
 * **Request**
   The userId must be presen as well as all fields to update, any field left undefined will not be updated.
-  ```json
+  ```javascript
     User
   ```
 
 * **Response:**
-    ```json
+    ```javascript
       User
     ```
 
@@ -169,7 +169,7 @@ Reimbursements should be ordered by date
 * **Allowed Roles** `finance-manager`
 
 * **Response:**
-    ```json
+    ```javascript
     [
       Reimbursement
     ]
@@ -188,7 +188,7 @@ Reimbursements should be ordered by date
 * **Allowed Roles** `finance-manager` or if ther userId is the user making the request.
 
 * **Response:**
-    ```json
+    ```javascript
     [
       Reimbursement
     ]
@@ -203,13 +203,13 @@ Reimbursements should be ordered by date
 
 * **Rquest:**
   The reimbursementId should be 0
-  ```json
+  ```javascript
   Reimbursement
   ```
 
 * **Response:**
   * **Status Code** 201 CREATED
-    ```json
+    ```javascript
       Reimbursement
     ```
 
@@ -225,12 +225,12 @@ Reimbursements should be ordered by date
 
 * **Request**
   The reimbursementId must be presen as well as all fields to update, any field left undefined will not be updated. This can be used to approve and deny.
-  ```json
+  ```javascript
     Reimbursement
   ```
 
 * **Response:**
-    ```json
+    ```javascript
       Reimbursement
     ```
 
