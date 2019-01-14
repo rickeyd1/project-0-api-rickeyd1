@@ -19,7 +19,7 @@ The User model keeps track of users information.
 
 **Role**  
 The Role model is used to track what permissions a user has
-```json
+```javascript
 {
   roleId: number, // primary key
   role: string // not null, unique
