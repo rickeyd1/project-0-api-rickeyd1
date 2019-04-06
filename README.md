@@ -8,12 +8,12 @@ The User model keeps track of users information.
 ```javascript
 {
   userId: number, // primary key
-	username: string, // not null, unique
-	password: string, // not null
-	firstName: string, // not null
-	lastName: string, // not null
-	email: string, // not null
-	role: Role // not null
+  username: string, // not null, unique
+  password: string, // not null
+  firstName: string, // not null
+  lastName: string, // not null
+  email: string, // not null
+  role: Role // not null
 }
 ```
 
@@ -31,10 +31,10 @@ The Reimbursement model is used to represent a single reimbursement that an empl
 ```javascript
 {
   reimbursementId: number, // primary key
-	author: number,  // foreign key -> User, not null
-	amount: number,  // not null
+  author: number,  // foreign key -> User, not null
+  amount: number,  // not null
   dateSubmitted: number, // not null
-  dateResolved: number, // not null
+  dateResolved: number,
   description: string, // not null
   resolver: number, // foreign key -> User
   status: number, // foreign ey -> ReimbursementStatus, not null
@@ -65,6 +65,7 @@ The ReimbursementType model is used to track what kind of reimbursement is being
 
 ## Security
   Security should be handled through session storage.
+  Admin should have access to everything by default. If an endpoint specifies admin that means only admin should be allowed.
   If a user does not have permission to access a particular endpoint it should return the following:
   * **Status Code:** 401 UNAUTHORIZED <br />
     **Content:** 
@@ -217,7 +218,7 @@ Reimbursements should be ordered by date
 
 ### **Update Reimbursement**  
 * **URL**
-  `/users`
+  `/reimbursements`
 
 * **Method:**
   `PATCH`
