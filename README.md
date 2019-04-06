@@ -77,14 +77,14 @@ The ReimbursementType model is used to track what kind of reimbursement is being
     Occurs if they do not have the appropriate permissions.
 
 ## Available Endpoints
-  [POST /login](#login)
-  [GET /users](#find-users)
-  [GET /users/:id](#find-users-by-id)
-  [PATCH /users](#update-user)
-  [GET /reimbursements](#find-reimbursement-by-status)
-  [GET /reimbursements/author/userId:userId](#find-reimbursement-by-user)
-  [POST /reimbursements](#submit-reimbursement)
-  [PATCH /reimbursements](#update-reimbursement)
+  [POST /login](#login)  
+  [GET /users](#find-users)  
+  [GET /users/:id](#find-users-by-id)  
+  [PATCH /users](#update-user)  
+  [GET /reimbursements](#find-reimbursement-by-status)  
+  [GET /reimbursements/author/userId:userId](#find-reimbursement-by-user)  
+  [POST /reimbursements](#submit-reimbursement)  
+  [PATCH /reimbursements](#update-reimbursement)  
 
 ### **Login**  
 * **URL**
