@@ -77,7 +77,7 @@ The ReimbursementType model is used to track what kind of reimbursement is being
     Occurs if they do not have the appropriate permissions.
 
 ## Available Endpoints
-  Retreives users from the database
+  [Login](#login)
 
 ### **Login**  
 * **URL**
