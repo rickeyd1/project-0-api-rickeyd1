@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
-
+    console.log(`Server is allowing a login`);
 });
 
 /**
