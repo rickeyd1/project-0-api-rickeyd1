@@ -1,4 +1,4 @@
-import { Role } from "./role";
+import { Role } from './role';
 
 export class User {
     userId: number;     // primary key
@@ -9,8 +9,8 @@ export class User {
     email: string;      // not null
     role: Role;         // not null
 
-    constructor(userId = 0, username = "", password = "",
-    firstName = "", lastName = "", email = "", role:Role) {
+    constructor(userId = 0, username = '', password = '',
+    firstName = '', lastName = '', email = '', role: Role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
