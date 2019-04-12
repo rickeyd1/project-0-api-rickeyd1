@@ -15,3 +15,5 @@ export let users: User[] = [
     new User(5, 'MM13', 'myMom', 'Mitch', 'Sorenstein', 'mSorenstein@workmail.com', uRoles[1]),
     new User(6, 'mPops', 'password', 'Pops', 'Maellard', 'pMaellard@workmail.com', uRoles[0])
 ];
+
+// Theme is going to be Arrested Development - mid season twist

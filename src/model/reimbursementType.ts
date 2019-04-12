@@ -3,7 +3,7 @@ export class ReimbursementType {
     type: string;       // not null, unique
 
     constructor(typeID = 0, type = '') {
-        this.typeId = typeID; 
+        this.typeId = typeID;
         this.type = type;
     }
 }

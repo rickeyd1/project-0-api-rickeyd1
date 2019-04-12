@@ -4,12 +4,15 @@ import { userRouter } from './routers/userRouter';
 import { reimbursementRouter } from './routers/reimburseRouter';
 import { sessionMiddleware } from './middleware/session.middleware';
 import { users } from './state';
+import { findAllUsers } from './daos/users.dao';
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use(sessionMiddleware);
+
+findAllUsers();
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -20,8 +23,7 @@ app.post('/login', (req, res) => {
         console.log('User successfully signed in...');
         res.end();
     } else {
-        res.send('Invalid Credentials');
-        res.sendStatus(400);
+        res.status(400).send('Invalid Credentials');
     }
 });
 

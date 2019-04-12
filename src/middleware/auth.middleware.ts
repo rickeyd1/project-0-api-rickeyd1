@@ -5,6 +5,7 @@ export function authMiddleware (roles: string[]) {
         next();
       } else {
         res.sendStatus(401);
+        res.send('The incoming token has expired');
       }
     };
   }

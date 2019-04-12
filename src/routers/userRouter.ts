@@ -38,6 +38,25 @@ userRouter.get('/:id', [(req, res, next) => {
 
 userRouter.patch('', [authMiddleware(['admin']), (req, res) => {
     console.log(`Patching user with new data...`);
+    const { userID } = req.body;
+    const user = users.find(u => u.userId === userID);
+    const { username, password, firstName, lastName, email, role } = req.body;
+    if (username !== undefined)
+        user.username = username;
 
-    res.send(`Server working on patching user record...`);
+    if (password !== undefined)
+        user.password = password;
+
+    if (firstName !== undefined)
+        user.firstName = firstName;
+
+    if (lastName !== undefined)
+        user.lastName = lastName;
+
+    if (email !== undefined)
+        user.email = email;
+
+    if (role !== undefined)
+        user.role = role;
+    res.send(user);
 }]);
