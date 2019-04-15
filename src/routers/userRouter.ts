@@ -1,6 +1,6 @@
 import express from 'express';
-import { users } from '../state';
 import { authMiddleware } from '../middleware/auth.middleware';
+import * as userDao from '../daos/users.dao';
 
 /**
  * User router will handle all requests starting with
@@ -8,9 +8,10 @@ import { authMiddleware } from '../middleware/auth.middleware';
  */
 export const userRouter = express.Router();
 
-userRouter.get('', [authMiddleware(['admin', 'finance-manager']), (req, res) => {
+userRouter.get('', [authMiddleware(['admin', 'finance-manager']), async (req, res) => {
     console.log('Retrieving users...');
-    res.json(users);
+    const user = await userDao.findAllUsers();
+    res.json(user);
 }]);
 
 userRouter.get('/:id', [(req, res, next) => {
@@ -23,12 +24,15 @@ userRouter.get('/:id', [(req, res, next) => {
         console.log('User has the required permissions to view');
         next();
     } else {
-        res.sendStatus(401);
+        const resp = {
+            message: 'The incoming token has expired'
+        };
+        res.status(401).json(resp);
     }
-}, (req, res) => {
+}, async (req, res) => {
     const id: number = +req.params.id;
     console.log(`Getting user with id: ${req.params.id}...`);
-    const user = users.find(u => u.userId === id);
+    const user = await userDao.findUserByID(id);
     if (user) {
         res.json(user);
     } else {
@@ -36,27 +40,57 @@ userRouter.get('/:id', [(req, res, next) => {
     }
 }]);
 
-userRouter.patch('', [authMiddleware(['admin']), (req, res) => {
+userRouter.patch('', [authMiddleware(['admin']), async (req, res) => {
     console.log(`Patching user with new data...`);
-    const { userID } = req.body;
-    const user = users.find(u => u.userId === userID);
-    const { username, password, firstName, lastName, email, role } = req.body;
-    if (username !== undefined)
-        user.username = username;
+    const { userId } = req.body;
+    const user = await userDao.findUserByID(userId);
+    const newUser = {
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        role: undefined
+    };
+    if (req.body.username !== undefined) {
+        newUser.username = req.body.username;
+    } else {
+        newUser.username = user.username;
+    }
+//  -----------------------------------------
+    if (req.body.password !== undefined) {
+        newUser.password = req.body.password;
+    } else {
+        newUser.password = user.password;
+    }
+//  -------------------------------------------
+    if (req.body.firstName !== undefined) {
+        newUser.firstName = req.body.firstName;
+    } else {
+        newUser.firstName = user.firstName;
+    }
+//  ------------------------------------------
+    if (req.body.lastName !== undefined) {
+        newUser.lastName = req.body.lastName;
+    } else {
+        newUser.lastName = user.lastName;
+    }
+//  ------------------------------------------
+    if (req.body.email !== undefined) {
+        newUser.email = req.body.email;
+    } else {
+        newUser.email = user.email;
+    }
+//  -----------------------------------------
+    if (req.body.role !== undefined) {
+        newUser.role = req.body.role;
+    } else {
+        newUser.role = user.role.roleID;
+    }
+    await userDao.updateUser(user.userId, newUser.username, newUser.password, newUser.firstName, newUser.lastName, newUser.email,
+        newUser.role);
 
-    if (password !== undefined)
-        user.password = password;
-
-    if (firstName !== undefined)
-        user.firstName = firstName;
-
-    if (lastName !== undefined)
-        user.lastName = lastName;
-
-    if (email !== undefined)
-        user.email = email;
-
-    if (role !== undefined)
-        user.role = role;
-    res.send(user);
+    console.log(`User ${userId} has been updated`);
+    const updateUser = await userDao.findUserByID(userId);
+    res.send(updateUser);
 }]);

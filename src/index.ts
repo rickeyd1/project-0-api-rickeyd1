@@ -3,8 +3,7 @@ import bodyParser from 'body-parser';
 import { userRouter } from './routers/userRouter';
 import { reimbursementRouter } from './routers/reimburseRouter';
 import { sessionMiddleware } from './middleware/session.middleware';
-import { users } from './state';
-import { findAllUsers } from './daos/users.dao';
+import * as userDao from './daos/users.dao';
 
 const app = express();
 
@@ -12,18 +11,19 @@ app.use(bodyParser.json());
 
 app.use(sessionMiddleware);
 
-findAllUsers();
-
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const user = users.find(u => u.username === username && u.password === password);
+    const user = await userDao.findUsernameAndPassword(username, password);
 
     if (user) {
         req.session.user = user;
         console.log('User successfully signed in...');
-        res.end();
+        res.json(user);
     } else {
-        res.status(400).send('Invalid Credentials');
+        const resp = {
+            message: 'Invalid credentials'
+        };
+        res.status(400).json(resp);
     }
 });
 
@@ -33,5 +33,7 @@ app.post('/login', (req, res) => {
 app.use('/users', userRouter);
 app.use('/reimbursements', reimbursementRouter);
 
-app.listen(8008);
+app.listen(8008, () => {
+    console.log('application started');
+});
 

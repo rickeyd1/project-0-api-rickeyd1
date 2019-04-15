@@ -10,7 +10,7 @@ export class Reimbursement {
     type: number;           // foreign key -> ReimbursementType
 
     constructor(reimbursementID = 0, author = 0, amount = 0, dateSubmitted = 0, dateResolved = 0,
-        description = '', resolver = 0, status = 0, type = 0){
+        description = '', resolver = 0, status = 0, type = 0) {
             this.reimbursementID = reimbursementID;
             this.author = author;
             this.amount = amount;
