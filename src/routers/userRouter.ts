@@ -44,53 +44,18 @@ userRouter.patch('', [authMiddleware(['admin']), async (req, res) => {
     console.log(`Patching user with new data...`);
     const { userId } = req.body;
     const user = await userDao.findUserByID(userId);
-    const newUser = {
-        username: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        role: undefined
-    };
-    if (req.body.username !== undefined) {
-        newUser.username = req.body.username;
-    } else {
-        newUser.username = user.username;
-    }
-//  -----------------------------------------
-    if (req.body.password !== undefined) {
-        newUser.password = req.body.password;
-    } else {
-        newUser.password = user.password;
-    }
-//  -------------------------------------------
-    if (req.body.firstName !== undefined) {
-        newUser.firstName = req.body.firstName;
-    } else {
-        newUser.firstName = user.firstName;
-    }
-//  ------------------------------------------
-    if (req.body.lastName !== undefined) {
-        newUser.lastName = req.body.lastName;
-    } else {
-        newUser.lastName = user.lastName;
-    }
-//  ------------------------------------------
-    if (req.body.email !== undefined) {
-        newUser.email = req.body.email;
-    } else {
-        newUser.email = user.email;
-    }
-//  -----------------------------------------
-    if (req.body.role !== undefined) {
-        newUser.role = req.body.role;
-    } else {
-        newUser.role = user.role.roleID;
+    const newUser = user;
+
+    for (const field in newUser) {
+        if ( (newUser[field] !== req.body[field]) && (req.body[field] !== undefined)) {
+            newUser[field] = req.body[field];
+        }
     }
     await userDao.updateUser(user.userId, newUser.username, newUser.password, newUser.firstName, newUser.lastName, newUser.email,
         newUser.role);
 
     console.log(`User ${userId} has been updated`);
     const updateUser = await userDao.findUserByID(userId);
-    res.send(updateUser);
+    res.send(updateUser);\
+    console.log()
 }]);
