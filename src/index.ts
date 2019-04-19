@@ -27,6 +27,10 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.use('', (req, res) => {
+    res.send('Hi I work.');
+});
+
 /**
  * Register routers
  */
