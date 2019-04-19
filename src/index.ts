@@ -27,7 +27,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.use('', (req, res) => {
+app.use('/hi', (req, res) => {
     res.send('Hi I work.');
 });
 
