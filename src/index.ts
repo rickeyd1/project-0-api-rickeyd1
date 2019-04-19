@@ -6,6 +6,7 @@ import { sessionMiddleware } from './middleware/session.middleware';
 import * as userDao from './daos/users.dao';
 
 const app = express();
+const port = process.env.SHIP_PORT || 8080;
 
 app.use(bodyParser.json());
 
@@ -37,7 +38,7 @@ app.use('/hi', (req, res) => {
 app.use('/users', userRouter);
 app.use('/reimbursements', reimbursementRouter);
 
-app.listen(8008, () => {
+app.listen(port, () => {
     console.log('application started');
 });
 
