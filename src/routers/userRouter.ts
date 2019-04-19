@@ -8,11 +8,11 @@ import * as userDao from '../daos/users.dao';
  */
 export const userRouter = express.Router();
 
-userRouter.get('', [authMiddleware(['admin', 'finance-manager']), async (req, res) => {
+userRouter.get('', async (req, res) => {
     console.log('Retrieving users...');
     const user = await userDao.findAllUsers();
     res.json(user);
-}]);
+});
 
 // [authMiddleware(['admin', 'finance-manager']),
 
