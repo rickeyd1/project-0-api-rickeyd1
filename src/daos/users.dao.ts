@@ -8,7 +8,7 @@ export async function findAllUsers() {
     try {
         client = await connectionPool.connect();
         const result = await client.query(`SELECT * FROM arrest_dev.users as u
-        INNER JOIN arrest_dev.role as r ON (u.role = r.role_id)`);
+        INNER JOIN arrest_dev.role as r ON (u.role = r.role_id) ORDER BY u.user_id ASC`);
         const user = result.rows;
         if (user) {
             const convertedUser = user.map(convertSqlUser);

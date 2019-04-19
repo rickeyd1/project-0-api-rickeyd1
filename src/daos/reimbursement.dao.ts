@@ -76,7 +76,7 @@ export async function updateReimbursement( reimbursementID, author, amount, date
         const queryString = `UPDATE arrest_dev.reimbursement
         SET author = $1, amount = $2, date_submitted = $3, date_resolved = $4, description = $5, resolver = $6, status = $7, type = $8
         WHERE reimbursement_id = $9`;
-        const result = await client.query(queryString, [author, amount, dateSubmitted, dateResolved, description, resolver, status, type, reimbursementID]);
+        await client.query(queryString, [author, amount, dateSubmitted, dateResolved, description, resolver, status, type, reimbursementID]);
     } catch (err) {
         console.log(err);
     } finally {
