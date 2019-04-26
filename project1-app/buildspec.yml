@@ -3,17 +3,17 @@ phases:
   install: 
     commands:
       - echo Installing source NPM dependencies...
-      - cd week4/spaceship-app-redux
+      - cd project1-app
       - npm install
   build:
     commands:
       - echo Build started on `date`
-      - cd week4/spaceship-app-redux
+      - cd project1-app
       - npm run build
   post_build:
     commands:
       - echo "$CODEBUILD_BUILD_SUCCEEDING"
-      - cd week4/spaceship-app-redux
+      - cd project1-app
       # if build succeeds copy the dist folder into the s3 bucket
       - |
         if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
@@ -26,6 +26,3 @@ artifacts:
   base-directory: 'build'
   discard-paths: yes
 Collapse
-
-
-
