@@ -3,26 +3,21 @@ phases:
   install: 
     commands:
       - echo Installing source NPM dependencies...
-      - cd project1-app
-      - npm install
+      - cd project1-app && npm install
   build:
     commands:
       - echo Build started on `date`
-      - cd project1-app
-      - npm run build
+      - cd project1-app && npm run build
   post_build:
     commands:
       - echo "$CODEBUILD_BUILD_SUCCEEDING"
-      - cd project1-app
       # if build succeeds copy the dist folder into the s3 bucket
       - |
         if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
-            aws s3 cp "build" "s3://${S3_BUCKET}" "--recursive";
+            aws s3 cp "project1-app" "s3://${S3_BUCKET}" "--recursive";
             echo "Build completed on date";
         fi
 artifacts:
   files:
     - '**/*'
-  base-directory: 'build'
   discard-paths: yes
-Collapse
