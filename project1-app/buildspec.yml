@@ -14,7 +14,7 @@ phases:
       # if build succeeds copy the dist folder into the s3 bucket
       - |
         if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
-            aws s3 cp "project1-app" "s3://${S3_BUCKET}" "--recursive";
+            aws s3 cp "project1-app/build" "s3://${S3_BUCKET}" "--recursive";
             echo "Build completed on date";
         fi
 artifacts:
