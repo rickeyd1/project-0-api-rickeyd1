@@ -7,7 +7,7 @@ export class HomeComponent extends React.PureComponent<any> {
     render() { 
         return (
             <div>
-                Hi
+                HI I AM THE HOME COMPONENT!!!
             </div>
         );
     }
