@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Component } from 'react';
 import BluthLogo from '../../assets/bluth_logo.png';
+import { updateCurrentUser } from '../../streams/current-user.stream';
 
 interface ISignInState {
     username: string;
@@ -42,7 +42,17 @@ export class SignInComponent extends React.Component<any, ISignInState> {
                     errorMessage: 'Invalid Credentials'
                 });
             } else if (resp.status === 200) {
+                const body = await resp.json();
+                localStorage.setItem('id', body.userId);
+                localStorage.setItem('username', body.username);
+                localStorage.setItem('pass', body.password);
+                localStorage.setItem('fname', body.firstName);
+                localStorage.setItem('lname', body.lastName);
+                localStorage.setItem('email', body.email);
+                localStorage.setItem('role', body.role.role);
+                localStorage.setItem('img', body.img);
                 // redirect to the home page
+                updateCurrentUser(body);
                 this.props.history.push('/home');
             } else {
                 this.setState({
@@ -70,7 +80,7 @@ export class SignInComponent extends React.Component<any, ISignInState> {
         const { username, password, errorMessage } = this.state;
         return (
         <form className="form-signin" onSubmit={this.submit}>
-            <img src= {BluthLogo} alt="Image of the Bluth logo" id="bluth-pic" />
+            <img src= {BluthLogo} alt="Bluth logo" id="bluth-pic" />
             <label htmlFor="inputUsername" className="sr-only">Username</label>
             <input type="text" id="inputUsername" name="username"
             className="form-control" placeholder="Username"
@@ -81,7 +91,7 @@ export class SignInComponent extends React.Component<any, ISignInState> {
             className="form-control" placeholder="Password"
             required value={password} onChange={this.updatePassord} />
 
-            <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button className="btn btn-lg btn-block" id="submit-buttonprop" type="submit">Sign in</button>
             <p id="login-error">{errorMessage}</p>
         </form>
         );

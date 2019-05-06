@@ -20,6 +20,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "reactstrap": "^8.0.0",
+    "rxjs": "^6.5.1",
     "tether": "^1.4.6",
     "typescript": "3.4.5"
   },
